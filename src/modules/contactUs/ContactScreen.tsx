@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-import ContactForm from '../components/ContactForm';
+import ContactForm from './subComponents/ContactForm';
 
 const ContactScreen = () => {
   return (

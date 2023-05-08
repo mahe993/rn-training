@@ -2,7 +2,7 @@ import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import {DEV_URL} from '@env';
-import {SearchData} from '../interfaces';
+import {SearchData} from '../../interfaces';
 
 const SearchScreen = () => {
   const [data, setData] = useState<Array<SearchData>>([]);

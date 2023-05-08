@@ -9,16 +9,12 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import {NavigationProp} from '@react-navigation/native';
-import {RootStackParamList} from '../../types';
-
 import {
   Colors,
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Tasks from '../components/Tasks';
+import Tasks from './subComponents/Tasks';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -49,11 +45,7 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
-type HomeScreenProps = {
-  navigation: NavigationProp<RootStackParamList>;
-};
-
-const HomeScreen = ({navigation}: HomeScreenProps): JSX.Element => {
+const HomeScreen = (): JSX.Element => {
   const backgroundStyle = {
     backgroundColor: Colors.darker,
   };

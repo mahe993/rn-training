@@ -1,19 +1,20 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from '../screens/HomeScreen';
-import SumEvenScreen from '../screens/SumEvenScreen';
-import NoVowelsScreen from '../screens/NoVowelsScreen';
-import DogPicture from '../screens/DogPicture';
-import Timer from '../screens/Timer';
-import MultiplyStringScreen from '../screens/MultipleStringScreen';
-import AccountScreen from '../screens/AccountScreen';
-import PalindromeScreen from '../screens/PalindromeScreen';
-import SortScreen from '../screens/SortScreen';
-import TodayScreen from '../screens/TodayScreen';
-import QuestionsScreen from '../screens/QuestionsScreen';
-import SearchScreen from '../screens/SearchScreen';
-import ContactScreen from '../screens/ContactScreen';
+import HomeScreen from '../modules/home/HomeScreen';
+import SumEvenScreen from '../modules/sumEven/SumEvenScreen';
+import NoVowelsScreen from '../modules/noVowels/NoVowelsScreen';
+import DogPicture from '../modules/dogPicture/DogPicture';
+import Timer from '../modules/timer/Timer';
+import MultiplyStringScreen from '../modules/mutipleString/MultipleStringScreen';
+import AccountScreen from '../modules/userAccount/AccountScreen';
+import PalindromeScreen from '../modules/palindrome/PalindromeScreen';
+import SortScreen from '../modules/sort/SortScreen';
+import TodayScreen from '../modules/today/TodayScreen';
+import QuestionsScreen from '../modules/questions/QuestionsScreen';
+import SearchScreen from '../modules/search/SearchScreen';
+import ContactScreen from '../modules/contactUs/ContactScreen';
+import RegisterScreen from '../modules/registerUser/RegisterScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ const NavRoutes = () => {
         <Stack.Screen name="Questions" component={QuestionsScreen} />
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Contact" component={ContactScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

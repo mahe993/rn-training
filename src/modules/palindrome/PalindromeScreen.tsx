@@ -1,20 +1,20 @@
 import {View, Text, Button} from 'react-native';
 import React, {useState} from 'react';
+import {isPalindrome} from '../../utils';
 import {TextInput} from 'react-native-gesture-handler';
-import {removeVowels} from '../utils';
 
-const NoVowelsScreen = () => {
+const PalindromeScreen = () => {
   const [input, setInput] = useState('');
-  const [string, setString] = useState<string>();
+  const [answer, setAnswer] = useState<boolean>();
 
   const handleButtonPress = (args: string): void => {
-    const st = removeVowels(args);
-    setString(st);
+    const check = isPalindrome(args);
+    setAnswer(check);
   };
 
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
-      <Text>Please enter the string to remove vowels from:</Text>
+      <Text>Please enter the string to check:</Text>
       <TextInput
         style={{
           height: 40,
@@ -27,10 +27,14 @@ const NoVowelsScreen = () => {
         placeholder="hello world"
         placeholderTextColor="grey"
       />
-      {string && <Text>string with no vowels: {string}</Text>}
-      <Button title="Vowel-less!" onPress={() => handleButtonPress(input)} />
+      {answer ? (
+        <Text style={{color: 'red'}}>ITS A PALINDROME!</Text>
+      ) : (
+        <Text style={{color: 'red'}}>Its not...</Text>
+      )}
+      <Button title="Palindrome?" onPress={() => handleButtonPress(input)} />
     </View>
   );
 };
 
-export default NoVowelsScreen;
+export default PalindromeScreen;

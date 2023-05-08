@@ -2,7 +2,7 @@ import {StyleSheet, Text} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../types';
+import {RootStackParamList} from '../../../types';
 
 const Tasks = (): JSX.Element => {
   const navigation: NavigationProp<RootStackParamList> = useNavigation();
@@ -44,6 +44,9 @@ const Tasks = (): JSX.Element => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Contact')}>
         <Text style={[styles.text]}>Contact Us</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={[styles.text]}>Register Account</Text>
       </TouchableOpacity>
     </>
   );

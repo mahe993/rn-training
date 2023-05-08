@@ -1,7 +1,7 @@
 import {View, Text, Button} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
-import {multiplyString} from '../utils';
+import {multiplyString} from '../../utils';
 
 const MultiplyStringScreen = () => {
   const [textInput, setTextInput] = useState('');

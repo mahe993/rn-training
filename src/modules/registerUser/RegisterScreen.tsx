@@ -1,20 +1,20 @@
 import {View, Text} from 'react-native';
 import React, {useState} from 'react';
-import AccountDetails from '../components/AccountDetails';
-import AccountForm from '../components/AccountForm';
+import AccountDetails from '../userAccount/subComponents/AccountDetails';
+import AccountForm from '../userAccount/subComponents/AccountForm';
 
 export interface User {
   name: string;
   email: string;
-  age: number;
-  phoneNumber?: number;
+  status: string;
+  phoneNumber?: Array<string>;
 }
 
-const AccountScreen = (): JSX.Element => {
+const RegisterScreen = (): JSX.Element => {
   const [userDetails, setUserDetails] = useState<User>({
     name: 'Ma He',
     email: 'abc@milli.sg',
-    age: 50,
+    status: 'happy',
   });
 
   return (
@@ -28,4 +28,4 @@ const AccountScreen = (): JSX.Element => {
   );
 };
 
-export default AccountScreen;
+export default RegisterScreen;

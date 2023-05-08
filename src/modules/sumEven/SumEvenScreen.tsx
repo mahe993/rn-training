@@ -1,7 +1,7 @@
 import {View, Text, Button} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
-import {sumEven} from '../utils';
+import {sumEven} from '../../utils';
 
 const SumEvenScreen = () => {
   const [input, setInput] = useState('');

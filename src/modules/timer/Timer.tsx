@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 const Timer = () => {
   const [timer, setTimer] = useState(10);
-  const interval = useRef<number>();
+  const interval = useRef<NodeJS.Timer>();
 
   useEffect(() => {
     interval.current = setInterval(() => {

@@ -1,16 +1,6 @@
 import {View, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
-enum DoesNotWork {
-  Monday = 'Mon',
-  Tuesday = 'Tue',
-  Wednesday = 'Wed',
-  Thursday = 'Thu',
-  Friday = 'Fri',
-  Saturday = 'Sat',
-  Sunay = 'Sun',
-}
-
 enum Days {
   Mon = 'Monday',
   Tue = 'Tuesday',

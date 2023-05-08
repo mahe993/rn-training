@@ -1,6 +1,6 @@
 import {View, Text, Button} from 'react-native';
 import React, {useState} from 'react';
-import {sortAscending, sortDescending} from '../utils';
+import {sortAscending, sortDescending} from '../../utils';
 import {TextInput} from 'react-native-gesture-handler';
 
 const SortScreen = () => {

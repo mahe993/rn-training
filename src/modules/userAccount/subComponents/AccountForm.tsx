@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, Button} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
-import {User} from '../screens/AccountScreen';
+import {User} from '../AccountScreen';
 
 type Props = {
   setUserDetails: React.Dispatch<React.SetStateAction<User>>;
