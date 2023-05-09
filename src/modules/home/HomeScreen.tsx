@@ -1,11 +1,9 @@
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   Dimensions,
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -15,35 +13,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import Tasks from './subComponents/Tasks';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: Colors.white,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: Colors.light,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import Section from './subComponents/Section';
 
 const HomeScreen = (): JSX.Element => {
   const backgroundStyle = {
@@ -95,24 +65,5 @@ const HomeScreen = (): JSX.Element => {
 };
 
 const windowHeight = Dimensions.get('window').height;
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 16,
-    paddingHorizontal: 24,
-    marginBottom: 32,
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 12,
-    fontWeight: '400',
-    fontStyle: 'italic',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+
 export default HomeScreen;

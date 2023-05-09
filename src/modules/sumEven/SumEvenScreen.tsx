@@ -2,10 +2,13 @@ import {View, Text, Button} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import {sumEven} from '../../utils';
+import useCheckAuth from '../../hooks/useCheckAuth';
 
 const SumEvenScreen = () => {
   const [input, setInput] = useState('');
   const [sum, setSum] = useState<number>();
+
+  useCheckAuth();
 
   const handleButtonPress = (args: string): void => {
     const total = sumEven(args);

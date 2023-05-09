@@ -15,6 +15,9 @@ import QuestionsScreen from '../modules/questions/QuestionsScreen';
 import SearchScreen from '../modules/search/SearchScreen';
 import ContactScreen from '../modules/contactUs/ContactScreen';
 import RegisterScreen from '../modules/registerUser/RegisterScreen';
+// import {useAuthContext} from '../auth/AuthContext';
+// import ProtectedRoutes from './ProtectedRoutes';
+import LoginScreen from '../modules/login/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +39,7 @@ const NavRoutes = () => {
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Contact" component={ContactScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

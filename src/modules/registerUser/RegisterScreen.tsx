@@ -1,7 +1,6 @@
 import {View, Text} from 'react-native';
-import React, {useState} from 'react';
-import AccountDetails from '../userAccount/subComponents/AccountDetails';
-import AccountForm from '../userAccount/subComponents/AccountForm';
+import React from 'react';
+import RegistrationForm from './subComponents/RegistrationForm';
 
 export interface User {
   name: string;
@@ -11,19 +10,12 @@ export interface User {
 }
 
 const RegisterScreen = (): JSX.Element => {
-  const [userDetails, setUserDetails] = useState<User>({
-    name: 'Ma He',
-    email: 'abc@milli.sg',
-    status: 'happy',
-  });
-
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       <Text style={{color: 'black', fontSize: 30, fontWeight: 'bold'}}>
-        Account
+        Register
       </Text>
-      <AccountDetails userDetails={userDetails} />
-      <AccountForm setUserDetails={setUserDetails} />
+      <RegistrationForm />
     </View>
   );
 };
