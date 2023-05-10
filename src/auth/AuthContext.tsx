@@ -28,6 +28,8 @@ export const AuthContextProvider = ({children}: AuthContextProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (initializingFirebase) return null;
+
   return (
     <AuthContext.Provider value={userDetails}>{children}</AuthContext.Provider>
   );
@@ -35,10 +37,6 @@ export const AuthContextProvider = ({children}: AuthContextProps) => {
 
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
-
-  if (context === undefined) {
-    throw new Error('useAuthContext must be used within AuthContextProvider');
-  }
 
   return context;
 };

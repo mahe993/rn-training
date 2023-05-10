@@ -4,9 +4,11 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {HomeScreens, RootStackParamList} from '../../../types';
 import auth from '@react-native-firebase/auth';
+import {useAuthContext} from '../../../auth/AuthContext';
 
 const Tasks = (): JSX.Element => {
   const navigation: NavigationProp<RootStackParamList> = useNavigation();
+  const user = useAuthContext();
 
   const handleLogOut = async () => {
     try {
@@ -15,6 +17,14 @@ const Tasks = (): JSX.Element => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  // use this to protect individual routes
+  const handleAuthStack = (screenName: HomeScreens) => {
+    if (!user) {
+      return navigation.navigate(HomeScreens.LOGIN);
+    }
+    return navigation.navigate(screenName);
   };
 
   return (
@@ -31,7 +41,8 @@ const Tasks = (): JSX.Element => {
         onPress={() => navigation.navigate(HomeScreens.NOVOWELS)}>
         <Text style={[styles.text]}>No Vowels</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate(HomeScreens.DOGPIC)}>
+      {/* Dog route is protected */}
+      <TouchableOpacity onPress={() => handleAuthStack(HomeScreens.DOGPIC)}>
         <Text style={[styles.text]}>Dog Picture</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate(HomeScreens.TIMER)}>
@@ -55,15 +66,18 @@ const Tasks = (): JSX.Element => {
       <TouchableOpacity onPress={() => navigation.navigate(HomeScreens.TODAY)}>
         <Text style={[styles.text]}>Today</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate(HomeScreens.SEARCH)}>
+      {/* Search route is protected */}
+      <TouchableOpacity onPress={() => handleAuthStack(HomeScreens.SEARCH)}>
         <Text style={[styles.text]}>Search</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate(HomeScreens.CONTACT)}>
         <Text style={[styles.text]}>Contact Us</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleLogOut}>
-        <Text style={[styles.text]}>Logout</Text>
+      <TouchableOpacity onPress={handleLogOut} disabled={!user}>
+        <Text style={[styles.text, {color: !user ? 'grey' : 'red'}]}>
+          Logout
+        </Text>
       </TouchableOpacity>
     </>
   );

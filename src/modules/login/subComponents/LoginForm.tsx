@@ -9,6 +9,8 @@ import {
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {HomeScreens, RootStackParamList} from '../../../types';
 
 interface LoginDetails {
   email: string;
@@ -21,6 +23,8 @@ const LoginForm = () => {
     password: '',
   });
   const [hidePassword, setHidePassword] = useState(true);
+
+  const navigate: NavigationProp<RootStackParamList> = useNavigation();
 
   const handleInputChange = (id: string, data: string): void => {
     setInputs(prev => ({...prev, [id]: data}));
@@ -41,8 +45,10 @@ const LoginForm = () => {
     }
     try {
       // login the user
-      auth().signInWithEmailAndPassword(inputs.email, inputs.password);
-      console.log(auth().currentUser);
+      await auth().signInWithEmailAndPassword(inputs.email, inputs.password);
+
+      // upon success, direct user back to home page
+      navigate.navigate(HomeScreens.HOME);
 
       // set the user auth details in AuthContext
     } catch (err: any) {
@@ -52,6 +58,10 @@ const LoginForm = () => {
 
       if (err.code === 'auth/invalid-email') {
         console.log('That email address is invalid!');
+      }
+
+      if (err.code === 'auth/user-not-found') {
+        console.log('That email address is not registered!');
       }
 
       console.error(err);
@@ -88,6 +98,12 @@ const LoginForm = () => {
       </View>
 
       <Button title="Login" onPress={handleLoginButtonPress} />
+      <Button
+        title="Register"
+        onPress={() => {
+          navigate.navigate(HomeScreens.REGISTER);
+        }}
+      />
     </>
   );
 };

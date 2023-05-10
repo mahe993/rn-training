@@ -5,7 +5,7 @@ import {HomeScreens, RootStackParamList} from '../types';
 
 const useCheckAuth = () => {
   const userDetails = useAuthContext();
-  console.log(userDetails);
+  console.log('hook log: ' + JSON.stringify(userDetails));
   const navigate: NavigationProp<RootStackParamList> = useNavigation();
 
   useEffect(() => {

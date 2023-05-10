@@ -38,7 +38,6 @@ const ContactForm = () => {
           {
             text: 'OK',
             onPress: () => {
-              console.log('hi');
               setInputs({name: '', email: '', message: ''});
               Keyboard.dismiss();
             },

@@ -1,5 +1,5 @@
 import {View, Button, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import useCheckAuth from '../../hooks/useCheckAuth';
 
 const DogPicture = () => {

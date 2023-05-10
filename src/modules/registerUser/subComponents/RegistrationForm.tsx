@@ -9,6 +9,8 @@ import {
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {HomeScreens, RootStackParamList} from '../../../types';
 
 interface RegistrationInput {
   email: string;
@@ -21,6 +23,8 @@ const RegistrationForm = () => {
     password: '',
   });
   const [hidePassword, setHidePassword] = useState(true);
+
+  const navigate: NavigationProp<RootStackParamList> = useNavigation();
 
   const handleInputChange = (id: string, data: string): void => {
     setInputs(prev => ({...prev, [id]: data}));
@@ -41,8 +45,13 @@ const RegistrationForm = () => {
     }
     try {
       // create the user
-      auth().createUserWithEmailAndPassword(inputs.email, inputs.password);
-      console.log(auth().currentUser?.getIdToken);
+      await auth().createUserWithEmailAndPassword(
+        inputs.email,
+        inputs.password,
+      );
+
+      // upon success, direct user back to home page
+      navigate.navigate(HomeScreens.HOME);
 
       // create the user in collections here using endpoint
       // set the user auth details in AuthContext

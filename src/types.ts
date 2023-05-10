@@ -24,6 +24,7 @@ export enum HomeScreens {
   CONTACT = 'Contact',
   REGISTER = 'Register',
   LOGIN = 'Login',
+  HOME = 'Home',
 }
 
 export type HomeStackParamsList = {
