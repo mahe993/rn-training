@@ -11,6 +11,7 @@ import {TextInput} from 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {HomeScreens, RootStackParamList} from '../../../types';
+import {signInUser} from '../../../auth/firebase/util';
 
 interface LoginDetails {
   email: string;
@@ -45,25 +46,11 @@ const LoginForm = () => {
     }
     try {
       // login the user
-      await auth().signInWithEmailAndPassword(inputs.email, inputs.password);
+      await signInUser(inputs.email, inputs.password);
 
       // upon success, direct user back to home page
       navigate.navigate(HomeScreens.HOME);
-
-      // set the user auth details in AuthContext
     } catch (err: any) {
-      if (err.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-
-      if (err.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-
-      if (err.code === 'auth/user-not-found') {
-        console.log('That email address is not registered!');
-      }
-
       console.error(err);
     }
   };

@@ -8,34 +8,55 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
-import auth from '@react-native-firebase/auth';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {HomeScreens, RootStackParamList} from '../../../types';
+import {registerUser} from '../../../auth/firebase/util';
+import {DEV_URL} from '@env';
 
 interface RegistrationInput {
   email: string;
   password: string;
 }
 
+interface UserCreationParams {
+  email: string;
+  name: string;
+  phoneNumber: string;
+}
+
 const RegistrationForm = () => {
-  const [inputs, setInputs] = useState<RegistrationInput>({
+  const [registrationInputs, setRegistrationInputs] =
+    useState<RegistrationInput>({
+      email: '',
+      password: '',
+    });
+  const [userInfoInputs, setUserInfoInputs] = useState<UserCreationParams>({
     email: '',
-    password: '',
+    name: '',
+    phoneNumber: '',
   });
   const [hidePassword, setHidePassword] = useState(true);
 
   const navigate: NavigationProp<RootStackParamList> = useNavigation();
 
   const handleInputChange = (id: string, data: string): void => {
-    setInputs(prev => ({...prev, [id]: data}));
+    if (id === 'email') {
+      setUserInfoInputs(prev => ({...prev, [id]: data}));
+    }
+    setRegistrationInputs(prev => ({...prev, [id]: data}));
   };
 
   const handleRegisterButtonPress = async (): Promise<void> => {
     // if either field is blank, do not allow registration
-    if (!inputs.password || !inputs.email) {
+    if (
+      !registrationInputs.password ||
+      !registrationInputs.email ||
+      !userInfoInputs.name ||
+      !userInfoInputs.phoneNumber
+    ) {
       return Alert.alert(
         'Additional information required',
-        'Email and password are required fields!',
+        'All fields required fields!',
         [
           {
             text: 'OK',
@@ -44,26 +65,22 @@ const RegistrationForm = () => {
       );
     }
     try {
-      // create the user
-      await auth().createUserWithEmailAndPassword(
-        inputs.email,
-        inputs.password,
-      );
+      // register the user
+      await registerUser(registrationInputs.email, registrationInputs.password);
 
       // upon success, direct user back to home page
       navigate.navigate(HomeScreens.HOME);
 
       // create the user in collections here using endpoint
-      // set the user auth details in AuthContext
+      fetch(`${DEV_URL}/users`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInfoInputs),
+      });
     } catch (err: any) {
-      if (err.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-      }
-
-      if (err.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      }
-
       console.error(err);
     }
   };
@@ -76,7 +93,7 @@ const RegistrationForm = () => {
           style={[style.input]}
           placeholder="something@something.com"
           placeholderTextColor="grey"
-          value={inputs.email}
+          value={registrationInputs.email}
           onChangeText={change => handleInputChange('email', change)}
         />
       </View>
@@ -87,7 +104,7 @@ const RegistrationForm = () => {
           style={[style.input]}
           placeholder="12!@QwEr"
           placeholderTextColor="grey"
-          value={inputs.password}
+          value={registrationInputs.password}
           onChangeText={change => handleInputChange('password', change)}
         />
         <TouchableOpacity onPress={() => setHidePassword(prev => !prev)}>
