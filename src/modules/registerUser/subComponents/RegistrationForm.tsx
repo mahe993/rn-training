@@ -10,31 +10,26 @@ import React, {useState} from 'react';
 import {TextInput} from 'react-native-gesture-handler';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {HomeScreens, RootStackParamList} from '../../../types';
-import {registerUser} from '../../../auth/firebase/util';
+import {getAccessToken, registerUser} from '../../../auth/firebase/util';
 import {DEV_URL} from '@env';
+import {RegistrationInput, UserCreationParams} from '../RegisterScreen';
 
-interface RegistrationInput {
-  email: string;
-  password: string;
+interface RegistrationFormProps {
+  setUserInfoInputs: React.Dispatch<React.SetStateAction<UserCreationParams>>;
+  userInfoInputs: UserCreationParams;
+  registrationInputs: RegistrationInput;
+  setRegistrationInputs: React.Dispatch<
+    React.SetStateAction<RegistrationInput>
+  >;
+  setCurrStep: React.Dispatch<React.SetStateAction<number>>;
 }
-
-interface UserCreationParams {
-  email: string;
-  name: string;
-  phoneNumber: string;
-}
-
-const RegistrationForm = () => {
-  const [registrationInputs, setRegistrationInputs] =
-    useState<RegistrationInput>({
-      email: '',
-      password: '',
-    });
-  const [userInfoInputs, setUserInfoInputs] = useState<UserCreationParams>({
-    email: '',
-    name: '',
-    phoneNumber: '',
-  });
+const RegistrationForm = ({
+  registrationInputs,
+  setRegistrationInputs,
+  userInfoInputs,
+  setUserInfoInputs,
+  setCurrStep,
+}: RegistrationFormProps) => {
   const [hidePassword, setHidePassword] = useState(true);
 
   const navigate: NavigationProp<RootStackParamList> = useNavigation();
@@ -48,6 +43,7 @@ const RegistrationForm = () => {
 
   const handleRegisterButtonPress = async (): Promise<void> => {
     // if either field is blank, do not allow registration
+    console.log(registrationInputs, userInfoInputs);
     if (
       !registrationInputs.password ||
       !registrationInputs.email ||
@@ -56,7 +52,7 @@ const RegistrationForm = () => {
     ) {
       return Alert.alert(
         'Additional information required',
-        'All fields required fields!',
+        'All fields are required fields!',
         [
           {
             text: 'OK',
@@ -68,18 +64,21 @@ const RegistrationForm = () => {
       // register the user
       await registerUser(registrationInputs.email, registrationInputs.password);
 
-      // upon success, direct user back to home page
-      navigate.navigate(HomeScreens.HOME);
-
       // create the user in collections here using endpoint
-      fetch(`${DEV_URL}/users`, {
+      const accessToken = await getAccessToken();
+      console.log(accessToken);
+      await fetch(`${DEV_URL}/users`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(userInfoInputs),
       });
+
+      // upon success, direct user back to home page
+      navigate.navigate(HomeScreens.HOME);
     } catch (err: any) {
       console.error(err);
     }
@@ -115,6 +114,7 @@ const RegistrationForm = () => {
       </View>
 
       <Button title="Register" onPress={handleRegisterButtonPress} />
+      <Button title="Back" onPress={() => setCurrStep(1)} />
     </>
   );
 };

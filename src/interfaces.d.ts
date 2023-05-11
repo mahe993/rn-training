@@ -1,4 +1,6 @@
-export interface SearchData {
+export interface UserData {
+  email: string;
   name: string;
-  team: string;
+  status: 'Happy' | 'Sad';
+  phoneNumber: string;
 }

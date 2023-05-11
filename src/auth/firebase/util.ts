@@ -35,3 +35,13 @@ export const signInUser = async (email: string, password: string) => {
     console.error(err);
   }
 };
+
+export const getAccessToken = async () => {
+  try {
+    const accessToken = await auth().currentUser?.getIdToken();
+
+    return accessToken;
+  } catch (err) {
+    throw new Error();
+  }
+};
